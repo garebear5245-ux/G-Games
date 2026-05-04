@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub</title>
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  font-family:Arial;
+  overflow:hidden;
+  background:#050505;
+  color:white;
+}
+/* START */
+.start{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top,#1a1a1a,#000);
+}
+.logo{
+  font-size:40px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
+.enterBtn{
+  padding:18px 40px;
+  font-size:18px;
+  font-weight:bold;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(145deg,#00ff99,#0066ff);
+}
+/* BROWSER */
+.browser{
+  display:none;
+  height:100%;
+  padding:20px;
+  background:#0d0d0d;
+  flex-direction:column;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.title{ font-size:22px; font-weight:bold; }
+.backBtn{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:#ff4444;
+  color:white;
+  cursor:pointer;
+}
+
+/* GRID - 4 per row with scroll */
+.grid-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 games per row */
+  gap:20px;
+  min-height: 100%;
+}
+
+/* CARD 3D */
+.card{
+  background:#1a1a1a;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+  transition:0.3s;
+  transform-style:preserve-3d;
+}
+.card:hover{
+  transform:rotateY(10deg) rotateX(8deg) scale(1.05);
+  box-shadow:0 20px 60px rgba(0,255,150,0.2);
+}
+.card::after{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-80%;
+  width:40%;
+  height:220%;
+  background:rgba(255,255,255,0.18);
+  transform:rotate(25deg);
+  transition:0.5s;
+}
+.card:hover::after{
+  left:130%;
+}
+.card img{ width:100%; display:block; }
+.card h3{ text-align:center; padding:10px; margin:0; }
+
+/* LAUNCHER */
+.launcher{
+  position:fixed;
+  inset:0;
+  background:#111;
+  display:none;
+  flex-direction:column;
+}
+.topbar{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  background:#1f1f1f;
+  align-items:center;
+}
+.topbar input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+}
+button{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#4caf50;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.gamebox{
+  flex:1;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+iframe{
+  width:85%;
+  height:85%;
+  border:none;
+  border-radius:12px;
+}
+/* ===== PLAY OVERLAY ===== */
+.playOverlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(4px);
+}
+.playBtn{
+  padding:20px 50px;
+  font-size:22px;
+  font-weight:bold;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(145deg,#00ff99,#0066ff);
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  transition:0.2s;
+}
+.playBtn:hover{
+  transform:scale(1.1);
+}
+
+/* Scrollbar styling */
+.grid-container::-webkit-scrollbar {
+  width: 8px;
+}
+.grid-container::-webkit-scrollbar-thumb {
+  background: #00ff99;
+  border-radius: 4px;
+}
+</style>
+</head>
+<body>
+<div class="start" id="start">
+  <div class="logo">🎮 GAME HUB</div>
+  <button class="enterBtn" onclick="enterHub()">ENTER</button>
+</div>
+
+<div class="browser" id="browser">
+  <div class="header">
+    <div class="title">Browse Games</div>
+    <button class="backBtn" onclick="back()">Back</button>
+  </div>
+  
+  <div class="grid-container">
+    <div class="grid">
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/mooncraft/', 'Minecraft')">
+        <img src="https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg">
+        <h3>Minecraft</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/crazycattle3d/', 'Crazycattle')">
+        <img src="https://crazycattlegame.com/images/crazy-cattle-3d.webp">
+        <h3>Crazycattle</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/polytrack/', 'Polytrack')">
+        <img src="https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp">
+        <h3>Polytrack</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/congenial-train/', 'Escape Road')">
+        <img src="https://snowroad3d.io/data/image/escape-road-game-online.jpg">
+        <h3>Escape Road</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Snow-Rider3D/', 'Snow Rider 3D')">
+        <img src="https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg">
+        <h3>Snow Rider 3D</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Run-3/', 'Run 3')">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3">
+        <h3>Run 3</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/chrome-dino-game-clone/', 'ChromeDino')">
+        <img src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg">
+        <h3>ChromeDino</h3>
+      </div>
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Geometrydashliteunblocked/', 'Geometry Dash Lite')">
+        <img src="https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3">
+        <h3>Geometry Dash Lite</h3>
+      </div>
+      
+      <!-- Cookie Clicker -->
+      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/SNAKES/', 'SnakeGameModern')">
+        <img src="https://i.imgur.com/8NH4JmS.png">
+        <h3>SnakeGameModern</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="launcher" id="launcher">
+  <div class="topbar">
+    <input id="tabName" placeholder="Tab name">
+    <button onclick="setTitle()">Set</button>
+    <button onclick="toggleFS()">Fullscreen</button>
+    <button onclick="closeGame()">Exit</button>
+  </div>
+  <div class="gamebox">
+    <iframe id="frame"></iframe>
+    <div class="playOverlay" id="playOverlay">
+      <button class="playBtn" onclick="startGame()">PLAY</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentURL = "";
+let currentName = "";
+
+function enterHub(){
+  document.getElementById("start").style.display = "none";
+  document.getElementById("browser").style.display = "flex";
+}
+
+function back(){
+  document.getElementById("browser").style.display = "none";
+  document.getElementById("start").style.display = "flex";
+}
+
+function openGame(url, name){
+  currentURL = url;
+  currentName = name;
+  document.getElementById("launcher").style.display = "flex";
+  document.getElementById("frame").src = url;
+  document.getElementById("tabName").value = name;
+  document.title = name;
+  document.getElementById("playOverlay").style.display = "flex";
+}
+
+function startGame(){
+  document.getElementById("playOverlay").style.display = "none";
+}
+
+function closeGame(){
+  document.getElementById("launcher").style.display = "none";
+  document.getElementById("frame").src = "";
+}
+
+function toggleFS(){
+  if(!currentURL) return;
+  const win = window.open("about:blank", "_blank");
+  const title = document.getElementById("tabName").value || currentName || "Game";
+  win.document.write(`
+    <title>${title}</title>
+    <iframe src="${currentURL}"
+      style="position:fixed;inset:0;width:100%;height:100%;border:0;">
+    </iframe>
+  `);
+  win.document.close();
+}
+
+function setTitle(){
+  const name = document.getElementById("tabName").value || "Game Hub";
+  document.title = name;
+}
+</script>
+</body>
+</html>
