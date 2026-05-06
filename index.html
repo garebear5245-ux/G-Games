@@ -3,13 +3,11 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game Hub</title>
-
 <style>
 :root{
   --primary:#c084fc;
   --secondary:#6b21a8;
 }
-
 html,body{
   margin:0;
   height:100%;
@@ -18,7 +16,6 @@ html,body{
   background:#050505;
   color:white;
 }
-
 /* START */
 .start{
   position:absolute;
@@ -29,14 +26,12 @@ html,body{
   justify-content:center;
   z-index:1;
 }
-
 .logo{
   font-size:40px;
   font-weight:bold;
   margin-bottom:30px;
   z-index:2;
 }
-
 .enterBtn{
   padding:18px 40px;
   font-size:18px;
@@ -48,7 +43,6 @@ html,body{
   background:linear-gradient(145deg,var(--primary),var(--secondary));
   z-index:2;
 }
-
 /* SETTINGS */
 .settingsBtn{
   position:absolute;
@@ -63,7 +57,6 @@ html,body{
   color:white;
   font-weight:bold;
 }
-
 .settingsPanel{
   position:absolute;
   top:70px;
@@ -76,7 +69,6 @@ html,body{
   display:none;
   z-index:3;
 }
-
 .settingRow{
   display:flex;
   justify-content:space-between;
@@ -84,7 +76,6 @@ html,body{
   margin-top:10px;
   font-size:14px;
 }
-
 .toggle{
   width:40px;
   height:22px;
@@ -93,7 +84,6 @@ html,body{
   position:relative;
   cursor:pointer;
 }
-
 .toggle::after{
   content:"";
   position:absolute;
@@ -105,15 +95,12 @@ html,body{
   border-radius:50%;
   transition:0.2s;
 }
-
 .toggle.on{
   background:var(--primary);
 }
-
 .toggle.on::after{
   left:21px;
 }
-
 /* BROWSER */
 .browser{
   display:none;
@@ -122,19 +109,30 @@ html,body{
   background:#0d0d0d;
   flex-direction:column;
 }
-
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:20px;
+  gap:15px;
 }
-
 .title{
   font-size:22px;
   font-weight:bold;
+  white-space:nowrap;
 }
-
+.searchBar{
+  flex:1;
+  padding:12px 16px;
+  background:#1a1a1a;
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:16px;
+}
+.searchBar::placeholder{
+  color:#777;
+}
 .backBtn{
   padding:10px 14px;
   border:none;
@@ -142,21 +140,19 @@ html,body{
   background:var(--secondary);
   color:white;
   cursor:pointer;
+  white-space:nowrap;
 }
-
 /* GRID */
 .grid-container{
   flex:1;
   overflow-y:auto;
   padding-right:10px;
 }
-
 .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:20px;
 }
-
 /* CARD */
 .card{
   background:#1a1a1a;
@@ -166,8 +162,6 @@ html,body{
   transition:0.3s;
   position:relative;
 }
-
-/* SHINE */
 .card::before{
   content:"";
   position:absolute;
@@ -179,21 +173,17 @@ html,body{
   transform:skewX(-20deg);
   transition:0.6s;
 }
-
 .card:hover::before{
   left:140%;
 }
-
 .card:hover{
   transform:scale(1.05);
   box-shadow:0 20px 60px rgba(192,132,252,0.35);
 }
-
 .card img{
   width:100%;
   display:block;
 }
-
 .card h3{
   text-align:center;
   padding:10px;
@@ -208,7 +198,6 @@ html,body{
   display:none;
   flex-direction:column;
 }
-
 .topbar{
   display:flex;
   gap:10px;
@@ -216,14 +205,12 @@ html,body{
   background:var(--secondary);
   align-items:center;
 }
-
 .topbar input{
   flex:1;
   padding:10px;
   border:none;
   border-radius:10px;
 }
-
 button{
   padding:10px;
   border:none;
@@ -233,7 +220,6 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
-
 .gamebox{
   flex:1;
   position:relative;
@@ -241,14 +227,12 @@ button{
   align-items:center;
   justify-content:center;
 }
-
 iframe{
   width:85%;
   height:85%;
   border:none;
   border-radius:12px;
 }
-
 /* PLAY */
 .playOverlay{
   position:absolute;
@@ -259,7 +243,6 @@ iframe{
   background:rgba(0,0,0,0.75);
   backdrop-filter:blur(4px);
 }
-
 .playBtn{
   padding:20px 50px;
   font-size:22px;
@@ -271,22 +254,17 @@ iframe{
 }
 </style>
 </head>
-
 <body>
 
 <div class="start" id="start">
-
   <button class="settingsBtn" onclick="toggleSettings()">Settings</button>
-
   <div class="settingsPanel" id="settingsPanel">
     <div style="font-weight:bold;">Settings</div>
-
     <div class="settingRow">
       <span>Disable fancy backgrounds</span>
       <div class="toggle" id="bgToggle" onclick="toggleBG()"></div>
     </div>
   </div>
-
   <div class="logo">🎮 GAME HUB</div>
   <button class="enterBtn" onclick="enterHub()">ENTER</button>
 </div>
@@ -294,63 +272,57 @@ iframe{
 <div class="browser" id="browser">
   <div class="header">
     <div class="title">Browse Games</div>
+    <input type="text" id="searchInput" class="searchBar" placeholder="Search games...">
     <button class="backBtn" onclick="back()">Back</button>
   </div>
-
+  
   <div class="grid-container">
-    <div class="grid">
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/mooncraft/', 'Minecraft')">
+    <div class="grid" id="gameGrid">
+      <div class="card" data-name="minecraft" onclick="openGame('https://garebear5245-ux.github.io/mooncraft/', 'Minecraft')">
         <img src="https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg">
         <h3>Minecraft</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/crazycattle3d/', 'Crazycattle')">
+      <div class="card" data-name="crazycattle" onclick="openGame('https://garebear5245-ux.github.io/crazycattle3d/', 'Crazycattle')">
         <img src="https://crazycattlegame.com/images/crazy-cattle-3d.webp">
         <h3>Crazycattle</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/polytrack/', 'Polytrack')">
+      <div class="card" data-name="polytrack" onclick="openGame('https://garebear5245-ux.github.io/polytrack/', 'Polytrack')">
         <img src="https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp">
         <h3>Polytrack</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/congenial-train/', 'Escape Road')">
+      <div class="card" data-name="escape road" onclick="openGame('https://garebear5245-ux.github.io/congenial-train/', 'Escape Road')">
         <img src="https://snowroad3d.io/data/image/escape-road-game-online.jpg">
         <h3>Escape Road</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Snow-Rider3D/', 'Snow Rider 3D')">
+      <div class="card" data-name="snow rider" onclick="openGame('https://garebear5245-ux.github.io/Snow-Rider3D/', 'Snow Rider 3D')">
         <img src="https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg">
         <h3>Snow Rider 3D</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Run-3/', 'Run 3')">
+      <div class="card" data-name="run 3" onclick="openGame('https://garebear5245-ux.github.io/Run-3/', 'Run 3')">
         <img src="https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3">
         <h3>Run 3</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/chrome-dino-game-clone/', 'ChromeDino')">
+      <div class="card" data-name="chrome dino" onclick="openGame('https://garebear5245-ux.github.io/chrome-dino-game-clone/', 'ChromeDino')">
         <img src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg">
         <h3>ChromeDino</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Geometrydashliteunblocked/', 'Geometry Dash Lite')">
+      <div class="card" data-name="geometry dash" onclick="openGame('https://garebear5245-ux.github.io/Geometrydashliteunblocked/', 'Geometry Dash Lite')">
         <img src="https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3">
         <h3>Geometry Dash Lite</h3>
       </div>
-
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/SNAKES/', 'SnakeGameModern')">
+      <div class="card" data-name="snake" onclick="openGame('https://garebear5245-ux.github.io/SNAKES/', 'SnakeGameModern')">
         <img src="https://i.imgur.com/8NH4JmS.png">
         <h3>SnakeGameModern</h3>
       </div>
-
-      <!-- ADDED GAME -->
-      <div class="card" onclick="openGame('https://garebear5245-ux.github.io/Slowroadsold/', 'Slowroads')">
+      <div class="card" data-name="slowroads" onclick="openGame('https://garebear5245-ux.github.io/Slowroadsold/', 'Slowroads')">
         <img src="https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3">
         <h3>Slowroads</h3>
       </div>
-
+      <!-- New Game -->
+      <div class="card" data-name="subway surfers" onclick="openGame('https://garebear5245-ux.github.io/subwaysurfer/', 'Subway Surfers')">
+        <img src="https://wallpaperaccess.com/full/2406215.jpg">
+        <h3>Subway Surfers</h3>
+      </div>
     </div>
   </div>
 </div>
@@ -362,7 +334,6 @@ iframe{
     <button onclick="toggleFS()">Fullscreen</button>
     <button onclick="closeGame()">Exit</button>
   </div>
-
   <div class="gamebox">
     <iframe id="frame"></iframe>
     <div class="playOverlay" id="playOverlay">
@@ -376,11 +347,12 @@ iframe{
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
 
 <script>
+// VANTA Background Control
 let vantaEffect = null;
 let fancyEnabled = true;
 
 function initVanta(){
-  if(!fancyEnabled) return;
+  if(!fancyEnabled || vantaEffect) return;
   vantaEffect = VANTA.FOG({
     el: "#start",
     mouseControls: true,
@@ -401,72 +373,88 @@ function destroyVanta(){
   }
 }
 
-window.addEventListener("load", initVanta);
-</script>
+window.addEventListener("load", () => {
+  document.getElementById("bgToggle").classList.add("on");
+  initVanta();
+});
 
-<script>
-let currentURL="";
-let currentName="";
-
+// Navigation
 function enterHub(){
-  document.getElementById("start").style.display="none";
-  document.getElementById("browser").style.display="flex";
+  document.getElementById("start").style.display = "none";
+  document.getElementById("browser").style.display = "flex";
+  destroyVanta();
 }
 
 function back(){
-  document.getElementById("browser").style.display="none";
-  document.getElementById("start").style.display="flex";
+  document.getElementById("browser").style.display = "none";
+  document.getElementById("start").style.display = "flex";
+  if(fancyEnabled) initVanta();
 }
 
+// Search Functionality
+document.getElementById("searchInput").addEventListener("input", function() {
+  const term = this.value.toLowerCase().trim();
+  const cards = document.querySelectorAll("#gameGrid .card");
+  
+  cards.forEach(card => {
+    const name = card.getAttribute("data-name").toLowerCase();
+    card.style.display = name.includes(term) ? "block" : "none";
+  });
+});
+
+// Settings
 function toggleSettings(){
-  const p=document.getElementById("settingsPanel");
-  p.style.display = (p.style.display==="block")?"none":"block";
+  const p = document.getElementById("settingsPanel");
+  p.style.display = (p.style.display === "block") ? "none" : "block";
 }
 
 function toggleBG(){
-  fancyEnabled=!fancyEnabled;
-  const t=document.getElementById("bgToggle");
-
+  fancyEnabled = !fancyEnabled;
+  const t = document.getElementById("bgToggle");
+  
   if(fancyEnabled){
     t.classList.add("on");
     initVanta();
-    document.getElementById("start").style.background="";
-  }else{
+    document.getElementById("start").style.background = "";
+  } else {
     t.classList.remove("on");
     destroyVanta();
-    document.getElementById("start").style.background="#000";
+    document.getElementById("start").style.background = "#050505";
   }
 }
 
-function openGame(url,name){
-  currentURL=url;
-  currentName=name;
-  document.getElementById("launcher").style.display="flex";
-  document.getElementById("frame").src=url;
-  document.getElementById("tabName").value=name;
-  document.getElementById("playOverlay").style.display="flex";
+// Game Launcher
+let currentURL = "";
+let currentName = "";
+
+function openGame(url, name){
+  currentURL = url;
+  currentName = name;
+  document.getElementById("launcher").style.display = "flex";
+  document.getElementById("frame").src = url;
+  document.getElementById("tabName").value = name;
+  document.getElementById("playOverlay").style.display = "flex";
 }
 
 function startGame(){
-  document.getElementById("playOverlay").style.display="none";
+  document.getElementById("playOverlay").style.display = "none";
 }
 
 function closeGame(){
-  document.getElementById("launcher").style.display="none";
-  document.getElementById("frame").src="";
+  document.getElementById("launcher").style.display = "none";
+  document.getElementById("frame").src = "";
 }
 
 function toggleFS(){
-  const win=window.open("about:blank","_blank");
-  const title=document.getElementById("tabName").value||currentName||"Game";
+  const win = window.open("about:blank","_blank");
+  const title = document.getElementById("tabName").value || currentName || "Game";
   win.document.write(`<title>${title}</title><iframe src="${currentURL}" style="position:fixed;inset:0;width:100%;height:100%;border:0;"></iframe>`);
   win.document.close();
 }
 
 function setTitle(){
-  document.title=document.getElementById("tabName").value||"Game Hub";
+  document.title = document.getElementById("tabName").value || "Game Hub";
 }
 </script>
-
 </body>
 </html>
