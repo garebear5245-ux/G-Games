@@ -108,6 +108,7 @@ html,body{
   padding:20px;
   background:#0d0d0d;
   flex-direction:column;
+  overflow:hidden;
 }
 .header{
   display:flex;
@@ -130,9 +131,6 @@ html,body{
   color:white;
   font-size:16px;
 }
-.searchBar::placeholder{
-  color:#777;
-}
 .backBtn{
   padding:10px 14px;
   border:none;
@@ -140,17 +138,19 @@ html,body{
   background:var(--secondary);
   color:white;
   cursor:pointer;
-  white-space:nowrap;
 }
-/* GRID */
-.grid-container{
-  flex:1;
-  overflow-y:auto;
-  padding-right:10px;
+/* SECTIONS */
+.section{
+  margin-bottom:35px;
+}
+.section h2{
+  margin:15px 0 15px 5px;
+  font-size:20px;
+  color:var(--primary);
 }
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
   gap:20px;
 }
 /* CARD */
@@ -182,12 +182,15 @@ html,body{
 }
 .card img{
   width:100%;
+  height:140px;
+  object-fit:cover;
   display:block;
 }
 .card h3{
   text-align:center;
-  padding:10px;
+  padding:12px;
   margin:0;
+  font-size:16px;
 }
 /* LAUNCHER */
 .launcher{
@@ -232,7 +235,6 @@ iframe{
   border:none;
   border-radius:12px;
 }
-/* PLAY */
 .playOverlay{
   position:absolute;
   inset:0;
@@ -266,72 +268,55 @@ iframe{
   <div class="logo">🎮 GAME HUB</div>
   <button class="enterBtn" onclick="enterHub()">ENTER</button>
 </div>
+
 <div class="browser" id="browser">
   <div class="header">
     <div class="title">Browse Games</div>
     <input type="text" id="searchInput" class="searchBar" placeholder="Search games...">
     <button class="backBtn" onclick="back()">Back</button>
   </div>
- 
-  <div class="grid-container">
-    <div class="grid" id="gameGrid">
-      <div class="card" data-name="minecraft" onclick="openGame('https://garebear5245-ux.github.io/mooncraft/', 'Minecraft')">
-        <img src="https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg">
-        <h3>Minecraft</h3>
-      </div>
-      <div class="card" data-name="crazycattle" onclick="openGame('https://garebear5245-ux.github.io/crazycattle3d/', 'Crazycattle')">
-        <img src="https://crazycattlegame.com/images/crazy-cattle-3d.webp">
-        <h3>Crazycattle</h3>
-      </div>
-      <div class="card" data-name="polytrack" onclick="openGame('https://garebear5245-ux.github.io/polytrack/', 'Polytrack')">
-        <img src="https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp">
-        <h3>Polytrack</h3>
-      </div>
-      <div class="card" data-name="escape road" onclick="openGame('https://garebear5245-ux.github.io/congenial-train/', 'Escape Road')">
-        <img src="https://snowroad3d.io/data/image/escape-road-game-online.jpg">
-        <h3>Escape Road</h3>
-      </div>
-      <div class="card" data-name="snow rider" onclick="openGame('https://garebear5245-ux.github.io/Snow-Rider3D/', 'Snow Rider 3D')">
-        <img src="https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg">
-        <h3>Snow Rider 3D</h3>
-      </div>
-      <div class="card" data-name="run 3" onclick="openGame('https://garebear5245-ux.github.io/Run-3/', 'Run 3')">
-        <img src="https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3">
-        <h3>Run 3</h3>
-      </div>
-      <div class="card" data-name="chrome dino" onclick="openGame('https://garebear5245-ux.github.io/chrome-dino-game-clone/', 'ChromeDino')">
-        <img src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg">
-        <h3>ChromeDino</h3>
-      </div>
-      <div class="card" data-name="geometry dash" onclick="openGame('https://garebear5245-ux.github.io/Geometrydashliteunblocked/', 'Geometry Dash Lite')">
-        <img src="https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3">
-        <h3>Geometry Dash Lite</h3>
-      </div>
-      <div class="card" data-name="snake" onclick="openGame('https://garebear5245-ux.github.io/SNAKES/', 'SnakeGameModern')">
-        <img src="https://i.imgur.com/8NH4JmS.png">
-        <h3>SnakeGameModern</h3>
-      </div>
-      <div class="card" data-name="slowroads" onclick="openGame('https://garebear5245-ux.github.io/Slowroadsold/', 'Slowroads')">
-        <img src="https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3">
-        <h3>Slowroads</h3>
-      </div>
-      <div class="card" data-name="subway surfers" onclick="openGame('https://garebear5245-ux.github.io/subwaysurfer/', 'Subway Surfers')">
-        <img src="https://wallpaperaccess.com/full/2406215.jpg">
-        <h3>Subway Surfers</h3>
-      </div>
-      <div class="card" data-name="slope" onclick="openGame('https://garebear5245-ux.github.io/Slope/', 'Slope')">
-        <img src="https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
-        <h3>Slope</h3>
-      </div>
 
-      <!-- New Game Added -->
-      <div class="card" data-name="browser" onclick="openGame('https://garebear5245-ux.github.io/modfied132/', 'Browser')">
-        <img src="https://tse1.mm.bing.net/th/id/OIP.MvAO9vj-odSv8r6vllub2gHaD2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
-        <h3>Browser</h3>
-      </div>
+  <div class="grid-container" style="overflow-y:auto; flex:1; padding-right:10px;">
+
+    <!-- Driving Section -->
+    <div class="section">
+      <h2>🚗 Driving & Racing</h2>
+      <div class="grid" id="drivingGrid"></div>
     </div>
+
+    <!-- Endless Runners -->
+    <div class="section">
+      <h2>🏃 Endless Runners</h2>
+      <div class="grid" id="runnerGrid"></div>
+    </div>
+
+    <!-- Classic -->
+    <div class="section">
+      <h2>🕹️ Classic</h2>
+      <div class="grid" id="classicGrid"></div>
+    </div>
+
+    <!-- Arcade / Action -->
+    <div class="section">
+      <h2>⚡ Arcade & Action</h2>
+      <div class="grid" id="arcadeGrid"></div>
+    </div>
+
+    <!-- Sandbox -->
+    <div class="section">
+      <h2>🌍 Sandbox</h2>
+      <div class="grid" id="sandboxGrid"></div>
+    </div>
+
+    <!-- Utility -->
+    <div class="section">
+      <h2>🔧 Utility / Others</h2>
+      <div class="grid" id="utilityGrid"></div>
+    </div>
+
   </div>
 </div>
+
 <div class="launcher" id="launcher">
   <div class="topbar">
     <input id="tabName" placeholder="Tab name">
@@ -351,9 +336,10 @@ iframe{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
 <script>
-// VANTA Background Control
+// VANTA Background
 let vantaEffect = null;
 let fancyEnabled = true;
+
 function initVanta(){
   if(!fancyEnabled || vantaEffect) return;
   vantaEffect = VANTA.FOG({
@@ -374,32 +360,72 @@ function destroyVanta(){
     vantaEffect = null;
   }
 }
-window.addEventListener("load", () => {
-  document.getElementById("bgToggle").classList.add("on");
-  initVanta();
-});
+
+// Game Data
+const games = [
+  {name:"Minecraft", url:"https://garebear5245-ux.github.io/mooncraft/", img:"https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg", category:"sandbox", data:"minecraft"},
+  {name:"Polytrack", url:"https://garebear5245-ux.github.io/polytrack/", img:"https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp", category:"driving", data:"polytrack"},
+  {name:"Escape Road", url:"https://garebear5245-ux.github.io/congenial-train/", img:"https://snowroad3d.io/data/image/escape-road-game-online.jpg", category:"driving", data:"escape road"},
+  {name:"Snow Rider 3D", url:"https://garebear5245-ux.github.io/Snow-Rider3D/", img:"https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg", category:"driving", data:"snow rider"},
+  {name:"Slowroads", url:"https://garebear5245-ux.github.io/Slowroadsold/", img:"https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3", category:"driving", data:"slowroads"},
+  {name:"Crazycattle", url:"https://garebear5245-ux.github.io/crazycattle3d/", img:"https://crazycattlegame.com/images/crazy-cattle-3d.webp", category:"driving", data:"crazycattle"},
+  {name:"Slope", url:"https://garebear5245-ux.github.io/Slope/", img:"https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", category:"runner", data:"slope"},
+  {name:"Subway Surfers", url:"https://garebear5245-ux.github.io/subwaysurfer/", img:"https://wallpaperaccess.com/full/2406215.jpg", category:"runner", data:"subway surfers"},
+  {name:"Run 3", url:"https://garebear5245-ux.github.io/Run-3/", img:"https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3", category:"runner", data:"run 3"},
+  {name:"ChromeDino", url:"https://garebear5245-ux.github.io/chrome-dino-game-clone/", img:"https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg", category:"runner", data:"chrome dino"},
+  {name:"Geometry Dash Lite", url:"https://garebear5245-ux.github.io/Geometrydashliteunblocked/", img:"https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3", category:"arcade", data:"geometry dash"},
+  {name:"SnakeGameModern", url:"https://garebear5245-ux.github.io/SNAKES/", img:"https://i.imgur.com/8NH4JmS.png", category:"classic", data:"snake"},
+  {name:"Browser", url:"https://garebear5245-ux.github.io/modfied132/", img:"https://tse1.mm.bing.net/th/id/OIP.MvAO9vj-odSv8r6vllub2gHaD2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", category:"utility", data:"browser"}
+];
+
+// Populate Sections
+function populateGames() {
+  const grids = {
+    driving: document.getElementById("drivingGrid"),
+    runner: document.getElementById("runnerGrid"),
+    classic: document.getElementById("classicGrid"),
+    arcade: document.getElementById("arcadeGrid"),
+    sandbox: document.getElementById("sandboxGrid"),
+    utility: document.getElementById("utilityGrid")
+  };
+
+  Object.values(grids).forEach(grid => grid.innerHTML = "");
+
+  games.forEach(game => {
+    const cardHTML = `
+      <div class="card" data-name="${game.data}" onclick="openGame('${game.url}', '${game.name}')">
+        <img src="${game.img}">
+        <h3>${game.name}</h3>
+      </div>
+    `;
+    grids[game.category].innerHTML += cardHTML;
+  });
+}
+
 // Navigation
 function enterHub(){
   document.getElementById("start").style.display = "none";
   document.getElementById("browser").style.display = "flex";
   destroyVanta();
+  populateGames();   // Populate on enter
 }
 function back(){
   document.getElementById("browser").style.display = "none";
   document.getElementById("start").style.display = "flex";
   if(fancyEnabled) initVanta();
 }
-// Search Functionality
+
+// Search
 document.getElementById("searchInput").addEventListener("input", function() {
   const term = this.value.toLowerCase().trim();
-  const cards = document.querySelectorAll("#gameGrid .card");
- 
+  const cards = document.querySelectorAll(".card");
   cards.forEach(card => {
     const name = card.getAttribute("data-name").toLowerCase();
     card.style.display = name.includes(term) ? "block" : "none";
   });
 });
-// Settings
+
+// Settings + Vanta
 function toggleSettings(){
   const p = document.getElementById("settingsPanel");
   p.style.display = (p.style.display === "block") ? "none" : "block";
@@ -407,7 +433,6 @@ function toggleSettings(){
 function toggleBG(){
   fancyEnabled = !fancyEnabled;
   const t = document.getElementById("bgToggle");
- 
   if(fancyEnabled){
     t.classList.add("on");
     initVanta();
@@ -418,6 +443,7 @@ function toggleBG(){
     document.getElementById("start").style.background = "#050505";
   }
 }
+
 // Game Launcher
 let currentURL = "";
 let currentName = "";
@@ -445,6 +471,11 @@ function toggleFS(){
 function setTitle(){
   document.title = document.getElementById("tabName").value || "Game Hub";
 }
+
+window.addEventListener("load", () => {
+  document.getElementById("bgToggle").classList.add("on");
+  initVanta();
+});
 </script>
 </body>
 </html>
