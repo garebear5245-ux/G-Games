@@ -189,7 +189,6 @@ html,body{
   padding:10px;
   margin:0;
 }
-
 /* LAUNCHER */
 .launcher{
   position:fixed;
@@ -255,7 +254,6 @@ iframe{
 </style>
 </head>
 <body>
-
 <div class="start" id="start">
   <button class="settingsBtn" onclick="toggleSettings()">Settings</button>
   <div class="settingsPanel" id="settingsPanel">
@@ -268,14 +266,13 @@ iframe{
   <div class="logo">🎮 GAME HUB</div>
   <button class="enterBtn" onclick="enterHub()">ENTER</button>
 </div>
-
 <div class="browser" id="browser">
   <div class="header">
     <div class="title">Browse Games</div>
     <input type="text" id="searchInput" class="searchBar" placeholder="Search games...">
     <button class="backBtn" onclick="back()">Back</button>
   </div>
-  
+ 
   <div class="grid-container">
     <div class="grid" id="gameGrid">
       <div class="card" data-name="minecraft" onclick="openGame('https://garebear5245-ux.github.io/mooncraft/', 'Minecraft')">
@@ -318,15 +315,23 @@ iframe{
         <img src="https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3">
         <h3>Slowroads</h3>
       </div>
-      <!-- New Game -->
       <div class="card" data-name="subway surfers" onclick="openGame('https://garebear5245-ux.github.io/subwaysurfer/', 'Subway Surfers')">
         <img src="https://wallpaperaccess.com/full/2406215.jpg">
         <h3>Subway Surfers</h3>
       </div>
+      <div class="card" data-name="slope" onclick="openGame('https://garebear5245-ux.github.io/Slope/', 'Slope')">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+        <h3>Slope</h3>
+      </div>
+
+      <!-- New Game Added -->
+      <div class="card" data-name="browser" onclick="openGame('https://garebear5245-ux.github.io/modfied132/', 'Browser')">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.MvAO9vj-odSv8r6vllub2gHaD2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+        <h3>Browser</h3>
+      </div>
     </div>
   </div>
 </div>
-
 <div class="launcher" id="launcher">
   <div class="topbar">
     <input id="tabName" placeholder="Tab name">
@@ -345,12 +350,10 @@ iframe{
 <!-- VANTA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
-
 <script>
 // VANTA Background Control
 let vantaEffect = null;
 let fancyEnabled = true;
-
 function initVanta(){
   if(!fancyEnabled || vantaEffect) return;
   vantaEffect = VANTA.FOG({
@@ -365,53 +368,46 @@ function initVanta(){
     baseColor: 0xb536e6
   });
 }
-
 function destroyVanta(){
   if(vantaEffect){
     vantaEffect.destroy();
     vantaEffect = null;
   }
 }
-
 window.addEventListener("load", () => {
   document.getElementById("bgToggle").classList.add("on");
   initVanta();
 });
-
 // Navigation
 function enterHub(){
   document.getElementById("start").style.display = "none";
   document.getElementById("browser").style.display = "flex";
   destroyVanta();
 }
-
 function back(){
   document.getElementById("browser").style.display = "none";
   document.getElementById("start").style.display = "flex";
   if(fancyEnabled) initVanta();
 }
-
 // Search Functionality
 document.getElementById("searchInput").addEventListener("input", function() {
   const term = this.value.toLowerCase().trim();
   const cards = document.querySelectorAll("#gameGrid .card");
-  
+ 
   cards.forEach(card => {
     const name = card.getAttribute("data-name").toLowerCase();
     card.style.display = name.includes(term) ? "block" : "none";
   });
 });
-
 // Settings
 function toggleSettings(){
   const p = document.getElementById("settingsPanel");
   p.style.display = (p.style.display === "block") ? "none" : "block";
 }
-
 function toggleBG(){
   fancyEnabled = !fancyEnabled;
   const t = document.getElementById("bgToggle");
-  
+ 
   if(fancyEnabled){
     t.classList.add("on");
     initVanta();
@@ -422,11 +418,9 @@ function toggleBG(){
     document.getElementById("start").style.background = "#050505";
   }
 }
-
 // Game Launcher
 let currentURL = "";
 let currentName = "";
-
 function openGame(url, name){
   currentURL = url;
   currentName = name;
@@ -435,23 +429,19 @@ function openGame(url, name){
   document.getElementById("tabName").value = name;
   document.getElementById("playOverlay").style.display = "flex";
 }
-
 function startGame(){
   document.getElementById("playOverlay").style.display = "none";
 }
-
 function closeGame(){
   document.getElementById("launcher").style.display = "none";
   document.getElementById("frame").src = "";
 }
-
 function toggleFS(){
   const win = window.open("about:blank","_blank");
   const title = document.getElementById("tabName").value || currentName || "Game";
   win.document.write(`<title>${title}</title><iframe src="${currentURL}" style="position:fixed;inset:0;width:100%;height:100%;border:0;"></iframe>`);
   win.document.close();
 }
-
 function setTitle(){
   document.title = document.getElementById("tabName").value || "Game Hub";
 }
