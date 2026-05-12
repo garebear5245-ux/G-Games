@@ -3,11 +3,13 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game Hub</title>
+
 <style>
 :root{
   --primary:#c084fc;
   --secondary:#6b21a8;
 }
+
 html,body{
   margin:0;
   height:100%;
@@ -16,6 +18,7 @@ html,body{
   background:#050505;
   color:white;
 }
+
 /* START */
 .start{
   position:absolute;
@@ -25,13 +28,83 @@ html,body{
   align-items:center;
   justify-content:center;
   z-index:1;
+  overflow:hidden;
 }
+
+/* PARTICLES */
+.particles{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.particle{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(192,132,252,0.8);
+  box-shadow:0 0 20px rgba(192,132,252,0.8);
+  animation:particleFloat linear infinite;
+}
+
+/* LOGO */
 .logo{
-  font-size:40px;
-  font-weight:bold;
-  margin-bottom:30px;
+  font-size:72px;
+  font-weight:900;
+  margin-bottom:40px;
   z-index:2;
+  position:relative;
+
+  background:linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #d8b4fe 15%,
+    #c084fc 35%,
+    #9333ea 60%,
+    #6b21a8 80%,
+    #2e1065 100%
+  );
+
+  background-size:300% 300%;
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:
+    gradientMove 6s ease infinite,
+    floatLogo 4s ease-in-out infinite;
+
+  text-shadow:
+    0 2px 0 rgba(255,255,255,0.2),
+    0 8px 20px rgba(192,132,252,0.3),
+    0 18px 50px rgba(107,33,168,0.45);
+
+  transform-style:preserve-3d;
+  perspective:1000px;
+  transition:transform 0.15s linear;
 }
+
+.logo::after{
+  content:"🎮 GAME HUB";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+
+  background:linear-gradient(
+    135deg,
+    #c084fc,
+    #9333ea,
+    #6b21a8
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  filter:blur(28px);
+  opacity:0.7;
+}
+
+/* BUTTONS */
 .enterBtn{
   padding:18px 40px;
   font-size:18px;
@@ -40,9 +113,28 @@ html,body{
   border-radius:14px;
   cursor:pointer;
   color:white;
-  background:linear-gradient(145deg,var(--primary),var(--secondary));
+
+  background:linear-gradient(
+    145deg,
+    var(--primary),
+    var(--secondary)
+  );
+
   z-index:2;
+
+  transition:0.25s;
+
+  box-shadow:
+    0 15px 40px rgba(192,132,252,0.35);
 }
+
+.enterBtn:hover{
+  transform:translateY(-4px) scale(1.05);
+
+  box-shadow:
+    0 25px 60px rgba(192,132,252,0.5);
+}
+
 /* SETTINGS */
 .settingsBtn{
   position:absolute;
@@ -57,6 +149,7 @@ html,body{
   color:white;
   font-weight:bold;
 }
+
 .settingsPanel{
   position:absolute;
   top:70px;
@@ -69,6 +162,7 @@ html,body{
   display:none;
   z-index:3;
 }
+
 .settingRow{
   display:flex;
   justify-content:space-between;
@@ -76,6 +170,7 @@ html,body{
   margin-top:10px;
   font-size:14px;
 }
+
 .toggle{
   width:40px;
   height:22px;
@@ -84,6 +179,7 @@ html,body{
   position:relative;
   cursor:pointer;
 }
+
 .toggle::after{
   content:"";
   position:absolute;
@@ -95,12 +191,15 @@ html,body{
   border-radius:50%;
   transition:0.2s;
 }
+
 .toggle.on{
   background:var(--primary);
 }
+
 .toggle.on::after{
   left:21px;
 }
+
 /* BROWSER */
 .browser{
   display:none;
@@ -110,6 +209,7 @@ html,body{
   flex-direction:column;
   overflow:hidden;
 }
+
 .header{
   display:flex;
   justify-content:space-between;
@@ -117,11 +217,13 @@ html,body{
   margin-bottom:20px;
   gap:15px;
 }
+
 .title{
   font-size:22px;
   font-weight:bold;
   white-space:nowrap;
 }
+
 .searchBar{
   flex:1;
   padding:12px 16px;
@@ -131,6 +233,7 @@ html,body{
   color:white;
   font-size:16px;
 }
+
 .backBtn{
   padding:10px 14px;
   border:none;
@@ -139,20 +242,24 @@ html,body{
   color:white;
   cursor:pointer;
 }
+
 /* SECTIONS */
 .section{
   margin-bottom:35px;
 }
+
 .section h2{
   margin:15px 0 15px 5px;
   font-size:20px;
   color:var(--primary);
 }
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
   gap:20px;
 }
+
 /* CARD */
 .card{
   background:#1a1a1a;
@@ -162,6 +269,7 @@ html,body{
   transition:0.3s;
   position:relative;
 }
+
 .card::before{
   content:"";
   position:absolute;
@@ -169,29 +277,42 @@ html,body{
   left:-120%;
   width:60%;
   height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.25),transparent);
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+
   transform:skewX(-20deg);
   transition:0.6s;
 }
+
 .card:hover::before{
   left:140%;
 }
+
 .card:hover{
   transform:scale(1.05);
-  box-shadow:0 20px 60px rgba(192,132,252,0.35);
+
+  box-shadow:
+    0 20px 60px rgba(192,132,252,0.35);
 }
+
 .card img{
   width:100%;
   height:140px;
   object-fit:cover;
   display:block;
 }
+
 .card h3{
   text-align:center;
   padding:12px;
   margin:0;
   font-size:16px;
 }
+
 /* LAUNCHER */
 .launcher{
   position:fixed;
@@ -200,6 +321,7 @@ html,body{
   display:none;
   flex-direction:column;
 }
+
 .topbar{
   display:flex;
   gap:10px;
@@ -207,12 +329,14 @@ html,body{
   background:var(--secondary);
   align-items:center;
 }
+
 .topbar input{
   flex:1;
   padding:10px;
   border:none;
   border-radius:10px;
 }
+
 button{
   padding:10px;
   border:none;
@@ -222,6 +346,7 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
+
 .gamebox{
   flex:1;
   position:relative;
@@ -229,12 +354,14 @@ button{
   align-items:center;
   justify-content:center;
 }
+
 iframe{
   width:85%;
   height:85%;
   border:none;
   border-radius:12px;
 }
+
 .playOverlay{
   position:absolute;
   inset:0;
@@ -244,6 +371,7 @@ iframe{
   background:rgba(0,0,0,0.75);
   backdrop-filter:blur(4px);
 }
+
 .playBtn{
   padding:20px 50px;
   font-size:22px;
@@ -251,64 +379,112 @@ iframe{
   border-radius:16px;
   cursor:pointer;
   color:white;
-  background:linear-gradient(145deg,var(--primary),var(--secondary));
+
+  background:linear-gradient(
+    145deg,
+    var(--primary),
+    var(--secondary)
+  );
+}
+
+/* ANIMATIONS */
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+@keyframes floatLogo{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-10px);
+  }
+}
+
+@keyframes particleFloat{
+  from{
+    transform:translateY(100vh) scale(0.5);
+    opacity:0;
+  }
+  10%{
+    opacity:1;
+  }
+  to{
+    transform:translateY(-10vh) scale(1.2);
+    opacity:0;
+  }
 }
 </style>
 </head>
+
 <body>
+
 <div class="start" id="start">
+
+  <div class="particles" id="particles"></div>
+
   <button class="settingsBtn" onclick="toggleSettings()">Settings</button>
+
   <div class="settingsPanel" id="settingsPanel">
     <div style="font-weight:bold;">Settings</div>
+
     <div class="settingRow">
       <span>Disable fancy backgrounds</span>
       <div class="toggle" id="bgToggle" onclick="toggleBG()"></div>
     </div>
   </div>
-  <div class="logo">🎮 GAME HUB</div>
+
+  <div class="logo" id="logo3d">🎮 GAME HUB</div>
+
   <button class="enterBtn" onclick="enterHub()">ENTER</button>
 </div>
 
 <div class="browser" id="browser">
   <div class="header">
     <div class="title">Browse Games</div>
-    <input type="text" id="searchInput" class="searchBar" placeholder="Search games...">
+
+    <input
+      type="text"
+      id="searchInput"
+      class="searchBar"
+      placeholder="Search games..."
+    >
+
     <button class="backBtn" onclick="back()">Back</button>
   </div>
 
-  <div class="grid-container" style="overflow-y:auto; flex:1; padding-right:10px;">
+  <div
+    class="grid-container"
+    style="overflow-y:auto; flex:1; padding-right:10px;"
+  >
 
-    <!-- Driving Section -->
     <div class="section">
       <h2>🚗 Driving & Racing</h2>
       <div class="grid" id="drivingGrid"></div>
     </div>
 
-    <!-- Endless Runners -->
     <div class="section">
       <h2>🏃 Endless Runners</h2>
       <div class="grid" id="runnerGrid"></div>
     </div>
 
-    <!-- Classic -->
     <div class="section">
       <h2>🕹️ Classic</h2>
       <div class="grid" id="classicGrid"></div>
     </div>
 
-    <!-- Arcade / Action -->
     <div class="section">
       <h2>⚡ Arcade & Action</h2>
       <div class="grid" id="arcadeGrid"></div>
     </div>
 
-    <!-- Sandbox -->
     <div class="section">
       <h2>🌍 Sandbox</h2>
       <div class="grid" id="sandboxGrid"></div>
     </div>
 
-    <!-- Utility -->
     <div class="section">
       <h2>🔧 Utility / Others</h2>
       <div class="grid" id="utilityGrid"></div>
@@ -318,164 +494,498 @@ iframe{
 </div>
 
 <div class="launcher" id="launcher">
+
   <div class="topbar">
+
     <input id="tabName" placeholder="Tab name">
+
     <button onclick="setTitle()">Set</button>
+
     <button onclick="toggleFS()">Fullscreen</button>
+
     <button onclick="closeGame()">Exit</button>
+
   </div>
+
   <div class="gamebox">
+
     <iframe id="frame"></iframe>
+
     <div class="playOverlay" id="playOverlay">
       <button class="playBtn" onclick="startGame()">PLAY</button>
     </div>
+
   </div>
 </div>
 
-<!-- VANTA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+
 <script>
-// VANTA Background
+/* VANTA */
 let vantaEffect = null;
 let fancyEnabled = true;
 
 function initVanta(){
+
   if(!fancyEnabled || vantaEffect) return;
+
   vantaEffect = VANTA.FOG({
-    el: "#start",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200,
-    minWidth: 200,
-    highlightColor: 0x5f038c,
-    midtoneColor: 0x3c00ff,
-    baseColor: 0xb536e6
+
+    el:"#start",
+
+    mouseControls:true,
+    touchControls:true,
+    gyroControls:false,
+
+    highlightColor:0x8b5cf6,
+    midtoneColor:0x6d28d9,
+    lowlightColor:0x1e1b4b,
+    baseColor:0x050505,
+
+    blurFactor:0.65,
+    speed:1.5,
+    zoom:1.2
   });
 }
+
 function destroyVanta(){
+
   if(vantaEffect){
+
     vantaEffect.destroy();
+
     vantaEffect = null;
   }
 }
 
-// Game Data
+/* PARTICLES */
+function createParticles(){
+
+  const container =
+    document.getElementById("particles");
+
+  for(let i=0;i<50;i++){
+
+    const p =
+      document.createElement("div");
+
+    p.className = "particle";
+
+    p.style.left =
+      Math.random()*100 + "%";
+
+    p.style.animationDuration =
+      (5 + Math.random()*8) + "s";
+
+    p.style.animationDelay =
+      Math.random()*5 + "s";
+
+    const size =
+      2 + Math.random()*6;
+
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+
+    container.appendChild(p);
+  }
+}
+
+/* 3D LOGO */
+const logo =
+  document.getElementById("logo3d");
+
+function mouseMoveEffect(e){
+
+  const x =
+    (window.innerWidth/2 - e.clientX)/30;
+
+  const y =
+    (window.innerHeight/2 - e.clientY)/30;
+
+  logo.style.transform =
+    `rotateY(${x}deg)
+     rotateX(${-y}deg)
+     translateY(-5px)`;
+}
+
+document.addEventListener(
+  "mousemove",
+  mouseMoveEffect
+);
+
+/* CULLING */
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+
+    if(document.hidden){
+
+      destroyVanta();
+
+    }else{
+
+      if(fancyEnabled &&
+         document.getElementById("start")
+         .style.display !== "none"){
+
+        initVanta();
+      }
+    }
+});
+
+/* SETTINGS */
+function toggleSettings(){
+
+  const p =
+    document.getElementById("settingsPanel");
+
+  p.style.display =
+    p.style.display === "block"
+      ? "none"
+      : "block";
+}
+
+function toggleBG(){
+
+  fancyEnabled = !fancyEnabled;
+
+  const t =
+    document.getElementById("bgToggle");
+
+  if(fancyEnabled){
+
+    t.classList.add("on");
+
+    if(
+      document.getElementById("start")
+      .style.display !== "none"
+    ){
+      initVanta();
+    }
+
+  }else{
+
+    t.classList.remove("on");
+
+    destroyVanta();
+
+    document.getElementById("start")
+      .style.background = "#050505";
+  }
+}
+
+/* GAME DATA */
 const games = [
-  {name:"Minecraft", url:"https://garebear5245-ux.github.io/mooncraft/", img:"https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg", category:"sandbox", data:"minecraft"},
-  {name:"Polytrack", url:"https://garebear5245-ux.github.io/polytrack/", img:"https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp", category:"driving", data:"polytrack"},
-  {name:"Escape Road", url:"https://garebear5245-ux.github.io/congenial-train/", img:"https://snowroad3d.io/data/image/escape-road-game-online.jpg", category:"driving", data:"escape road"},
-  {name:"Snow Rider 3D", url:"https://garebear5245-ux.github.io/Snow-Rider3D/", img:"https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg", category:"driving", data:"snow rider"},
-  {name:"Slowroads", url:"https://garebear5245-ux.github.io/Slowroadsold/", img:"https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3", category:"driving", data:"slowroads"},
-  {name:"Crazycattle", url:"https://garebear5245-ux.github.io/crazycattle3d/", img:"https://crazycattlegame.com/images/crazy-cattle-3d.webp", category:"driving", data:"crazycattle"},
-  {name:"Slope", url:"https://garebear5245-ux.github.io/Slope-Game1/", img:"https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", category:"runner", data:"slope"},
-  {name:"Subway Surfers", url:"https://garebear5245-ux.github.io/subwaysurfer/", img:"https://wallpaperaccess.com/full/2406215.jpg", category:"runner", data:"subway surfers"},
-  {name:"Run 3", url:"https://garebear5245-ux.github.io/Run-3/", img:"https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3", category:"runner", data:"run 3"},
-  {name:"ChromeDino", url:"https://garebear5245-ux.github.io/chrome-dino-game-clone/", img:"https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg", category:"runner", data:"chrome dino"},
-  {name:"Geometry Dash Lite", url:"https://garebear5245-ux.github.io/Geometrydashliteunblocked/", img:"https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3", category:"arcade", data:"geometry dash"},
-  {name:"SnakeGameModern", url:"https://garebear5245-ux.github.io/SNAKES/", img:"https://i.imgur.com/8NH4JmS.png", category:"classic", data:"snake"},
-  {name:"Browser", url:"https://garebear5245-ux.github.io/modfied132/", img:"https://tse1.mm.bing.net/th/id/OIP.MvAO9vj-odSv8r6vllub2gHaD2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", category:"utility", data:"browser"}
+
+{
+name:"Minecraft",
+url:"https://garebear5245-ux.github.io/mooncraft/",
+img:"https://cdn.mos.cms.futurecdn.net/y9sUcALUTa6W4BQiUNiH5R.jpg",
+category:"sandbox",
+data:"minecraft"
+},
+
+{
+name:"Polytrack",
+url:"https://garebear5245-ux.github.io/polytrack/",
+img:"https://webgamer.io/games/polytrack/polytrack.1280x.85pc.webp",
+category:"driving",
+data:"polytrack"
+},
+
+{
+name:"Escape Road",
+url:"https://garebear5245-ux.github.io/congenial-train/",
+img:"https://snowroad3d.io/data/image/escape-road-game-online.jpg",
+category:"driving",
+data:"escape road"
+},
+
+{
+name:"Snow Rider 3D",
+url:"https://garebear5245-ux.github.io/Snow-Rider3D/",
+img:"https://snowrider.game/images/howto/snow-rider-tutorial-1.jpg",
+category:"driving",
+data:"snow rider"
+},
+
+{
+name:"Slowroads",
+url:"https://garebear5245-ux.github.io/Slowroadsold/",
+img:"https://tse1.mm.bing.net/th/id/OIP.TbWXd5A4TpaiwAtR6Pb1ZQHaEa?rs=1&pid=ImgDetMain&o=7&rm=3",
+category:"driving",
+data:"slowroads"
+},
+
+{
+name:"Crazycattle",
+url:"https://garebear5245-ux.github.io/crazycattle3d/",
+img:"https://crazycattlegame.com/images/crazy-cattle-3d.webp",
+category:"driving",
+data:"crazycattle"
+},
+
+{
+name:"Slope",
+url:"https://garebear5245-ux.github.io/Slope-Game1/",
+img:"https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+category:"runner",
+data:"slope"
+},
+
+{
+name:"Subway Surfers",
+url:"https://garebear5245-ux.github.io/subwaysurfer/",
+img:"https://wallpaperaccess.com/full/2406215.jpg",
+category:"runner",
+data:"subway surfers"
+},
+
+{
+name:"Run 3",
+url:"https://garebear5245-ux.github.io/Run-3/",
+img:"https://tse4.mm.bing.net/th/id/OIP.iJjSsJ2T4Ynyn72cZw1rTgHaEU?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3",
+category:"runner",
+data:"run 3"
+},
+
+{
+name:"ChromeDino",
+url:"https://garebear5245-ux.github.io/chrome-dino-game-clone/",
+img:"https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/03/screenshot-of-the-google-chrome-dinosaur-game.jpg",
+category:"runner",
+data:"chrome dino"
+},
+
+{
+name:"Geometry Dash Lite",
+url:"https://garebear5245-ux.github.io/Geometrydashliteunblocked/",
+img:"https://tse3.mm.bing.net/th/id/OIP.3cgWMLojIeUJTohaFffFcwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+category:"arcade",
+data:"geometry dash"
+},
+
+{
+name:"SnakeGameModern",
+url:"https://garebear5245-ux.github.io/SNAKES/",
+img:"https://i.imgur.com/8NH4JmS.png",
+category:"classic",
+data:"snake"
+},
+
+{
+name:"Browser",
+url:"https://garebear5245-ux.github.io/modfied132/",
+img:"https://tse1.mm.bing.net/th/id/OIP.MvAO9vj-odSv8r6vllub2gHaD2?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+category:"utility",
+data:"browser"
+}
+
 ];
 
-// Populate Sections
-function populateGames() {
+/* POPULATE */
+function populateGames(){
+
   const grids = {
-    driving: document.getElementById("drivingGrid"),
-    runner: document.getElementById("runnerGrid"),
-    classic: document.getElementById("classicGrid"),
-    arcade: document.getElementById("arcadeGrid"),
-    sandbox: document.getElementById("sandboxGrid"),
-    utility: document.getElementById("utilityGrid")
+
+    driving:
+      document.getElementById("drivingGrid"),
+
+    runner:
+      document.getElementById("runnerGrid"),
+
+    classic:
+      document.getElementById("classicGrid"),
+
+    arcade:
+      document.getElementById("arcadeGrid"),
+
+    sandbox:
+      document.getElementById("sandboxGrid"),
+
+    utility:
+      document.getElementById("utilityGrid")
   };
 
-  Object.values(grids).forEach(grid => grid.innerHTML = "");
+  Object.values(grids).forEach(
+    grid => grid.innerHTML = ""
+  );
 
-  games.forEach(game => {
+  games.forEach(game=>{
+
     const cardHTML = `
-      <div class="card" data-name="${game.data}" onclick="openGame('${game.url}', '${game.name}')">
+      <div
+        class="card"
+        data-name="${game.data}"
+        onclick="openGame('${game.url}','${game.name}')"
+      >
+
         <img src="${game.img}">
+
         <h3>${game.name}</h3>
+
       </div>
     `;
+
     grids[game.category].innerHTML += cardHTML;
   });
 }
 
-// Navigation
+/* NAVIGATION */
 function enterHub(){
-  document.getElementById("start").style.display = "none";
-  document.getElementById("browser").style.display = "flex";
+
+  document.getElementById("start")
+    .style.display = "none";
+
+  document.getElementById("browser")
+    .style.display = "flex";
+
+  /* FULL PERFORMANCE MODE */
   destroyVanta();
-  populateGames();   // Populate on enter
+
+  document.getElementById("particles")
+    .style.display = "none";
+
+  document.removeEventListener(
+    "mousemove",
+    mouseMoveEffect
+  );
+
+  populateGames();
 }
+
 function back(){
-  document.getElementById("browser").style.display = "none";
-  document.getElementById("start").style.display = "flex";
-  if(fancyEnabled) initVanta();
-}
 
-// Search
-document.getElementById("searchInput").addEventListener("input", function() {
-  const term = this.value.toLowerCase().trim();
-  const cards = document.querySelectorAll(".card");
-  cards.forEach(card => {
-    const name = card.getAttribute("data-name").toLowerCase();
-    card.style.display = name.includes(term) ? "block" : "none";
-  });
-});
+  document.getElementById("browser")
+    .style.display = "none";
 
-// Settings + Vanta
-function toggleSettings(){
-  const p = document.getElementById("settingsPanel");
-  p.style.display = (p.style.display === "block") ? "none" : "block";
-}
-function toggleBG(){
-  fancyEnabled = !fancyEnabled;
-  const t = document.getElementById("bgToggle");
+  document.getElementById("start")
+    .style.display = "flex";
+
+  /* RESTORE EFFECTS */
+  document.getElementById("particles")
+    .style.display = "block";
+
+  document.addEventListener(
+    "mousemove",
+    mouseMoveEffect
+  );
+
   if(fancyEnabled){
-    t.classList.add("on");
     initVanta();
-    document.getElementById("start").style.background = "";
-  } else {
-    t.classList.remove("on");
-    destroyVanta();
-    document.getElementById("start").style.background = "#050505";
   }
 }
 
-// Game Launcher
+/* SEARCH */
+document
+.getElementById("searchInput")
+.addEventListener("input",function(){
+
+  const term =
+    this.value.toLowerCase().trim();
+
+  const cards =
+    document.querySelectorAll(".card");
+
+  cards.forEach(card=>{
+
+    const name =
+      card.getAttribute("data-name")
+      .toLowerCase();
+
+    card.style.display =
+      name.includes(term)
+        ? "block"
+        : "none";
+  });
+});
+
+/* GAME LAUNCHER */
 let currentURL = "";
 let currentName = "";
-function openGame(url, name){
+
+function openGame(url,name){
+
   currentURL = url;
   currentName = name;
-  document.getElementById("launcher").style.display = "flex";
-  document.getElementById("frame").src = url;
-  document.getElementById("tabName").value = name;
-  document.getElementById("playOverlay").style.display = "flex";
-}
-function startGame(){
-  document.getElementById("playOverlay").style.display = "none";
-}
-function closeGame(){
-  document.getElementById("launcher").style.display = "none";
-  document.getElementById("frame").src = "";
-}
-function toggleFS(){
-  const win = window.open("about:blank","_blank");
-  const title = document.getElementById("tabName").value || currentName || "Game";
-  win.document.write(`<title>${title}</title><iframe src="${currentURL}" style="position:fixed;inset:0;width:100%;height:100%;border:0;"></iframe>`);
-  win.document.close();
-}
-function setTitle(){
-  document.title = document.getElementById("tabName").value || "Game Hub";
+
+  document.getElementById("launcher")
+    .style.display = "flex";
+
+  document.getElementById("frame")
+    .src = url;
+
+  document.getElementById("tabName")
+    .value = name;
+
+  document.getElementById("playOverlay")
+    .style.display = "flex";
 }
 
-window.addEventListener("load", () => {
-  document.getElementById("bgToggle").classList.add("on");
+function startGame(){
+
+  document.getElementById("playOverlay")
+    .style.display = "none";
+}
+
+function closeGame(){
+
+  document.getElementById("launcher")
+    .style.display = "none";
+
+  document.getElementById("frame")
+    .src = "";
+}
+
+function toggleFS(){
+
+  const win =
+    window.open("about:blank","_blank");
+
+  const title =
+    document.getElementById("tabName").value
+    || currentName
+    || "Game";
+
+  win.document.write(`
+    <title>${title}</title>
+
+    <iframe
+      src="${currentURL}"
+
+      style="
+        position:fixed;
+        inset:0;
+        width:100%;
+        height:100%;
+        border:0;
+      "
+    ></iframe>
+  `);
+
+  win.document.close();
+}
+
+function setTitle(){
+
+  document.title =
+    document.getElementById("tabName").value
+    || "Game Hub";
+}
+
+/* LOAD */
+window.addEventListener("load",()=>{
+
+  document
+    .getElementById("bgToggle")
+    .classList.add("on");
+
   initVanta();
+
+  createParticles();
 });
 </script>
+
 </body>
 </html>
