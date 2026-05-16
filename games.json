@@ -95,6 +95,12 @@
       "url": "https://garebear5245-ux.github.io/super-octo-happiness/",
       "img": "https://i.imgur.com/uOtw7AP.png",
       "category": "utility"
+    },
+    {
+      "name": "Kirbys Advanture",
+      "url": "https://garebear5245-ux.github.io/kirbysadventure/",
+      "img": "https://goombastomp.com/wp-content/uploads/2018/03/Kirbys-Adventure-nes.jpg",
+      "category": "arcade"
     }
   ]
 }
